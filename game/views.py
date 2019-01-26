@@ -1,19 +1,32 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
-from .models import Game
+from .models import Game,User_Profile
 from random import randint
 import logging
 import json
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+#from django.contrib import auth
+#from django.contrib.auth import get_user_model
+#User=get_user_model()
+
+#player = User_Profile.objects.filter(user)
+#player.user_score+=
+
+user = request.user
 logger = logging.getLogger('GAME')
 UP=0
 DOWN=1
 LEFT=2
 RIGHT=3;
-@ensure_csrf_cookie
+
+@login_required	
 def index(request):
 
+	if not request.user.is_authenticated()
+		return redirect('register')
     game = Game()
 
     games = Game.objects.all()
@@ -23,44 +36,54 @@ def index(request):
     return render(request, 'db.html', {'game': games})
     #return HttpResponse("hellooo")
 
+@login_required	
 def do(request):
+	if not request.user.is_authenticated() :
+		return redirect('/main/login')
 	if request.method == 'GET':
 		return create()
 	elif request.method == 'POST':
 		logger.info(request.body)
 		data =json.loads(request.body)
 		return process(data)
-	return create()
+	return create() 
 
+@login_required	
 def process(data):
 	board = data['board']
-	direction = data['direction']
+	direction = data['direction']	
+	score = data['score']
 	#Collapse by direction
-	collapse(board,direction)
+	collapse(board,direction,score)
 	#Add new element
 	lose = addNew(board)
 	#Build response
 	response = {}
 	response['board'] = board
 	response['continue'] = (lose==False)
+	response['score'] = score
 	logger.info(response)
-	return JsonResponse(response,safe=False)	
+	return JsonResponse(response,safe=False) 
+	
 
-def collapse(board,direction):
+def collapse(board,direction,score):
 	collapsed = False
 	for i,e in enumerate(board):
 		j = nextIndex(i,direction)
 		if j>=0 and j <=15:
 			if board[i] == board[j] and board[i] != 0:
 				logger.info("Collapsing %d,%d in %d and %d" % (board[i],board[j],i,j))
+				score += board[i]*5; # score increment;
+				user.score.save()
 				collapseResult(board,i,j)
 				collapsed= True
+
 			if board[j] != 0 and board[i] == 0:
 				logger.info("Collapsing zeros %d,%d in %d and %d" % (board[i],board[j],i,j))
 				collapseZeroResult(board,i,j)
 				collapsed= True
-	if collapsed == True:
-		collapse(board,direction)
+	# if collapsed == True:
+	# 	collapse(board,direction,score) # yahan kya ho rha ??? # is not this infinite loop ?
 
 def collapseResult(board,i,j):
 	board[i] = board[i]*2;
