@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
-from .models import Game
+from .models import Game,Player,Board
 from random import randint
 import logging
 import json
+
+#user = request.user
 
 logger = logging.getLogger('GAME')
 UP=0
@@ -13,29 +15,47 @@ LEFT=2
 RIGHT=3;
 @ensure_csrf_cookie
 def index(request):
+	print("calling index")
+	
+	game = Game()
 
-    game = Game()
+	games = Game.objects.all()
 
-    games = Game.objects.all()
-    print(games)
-    print(type(games))
-
-    return render(request, 'db.html', {'game': games})
-    #return HttpResponse("hellooo")
+	return render(request, 'db.html', {'games': games})
 
 def do(request):
-	if request.method == 'GET':
+	print("calling do")
+	if request.method == 'GET':    # page is called by 'get' request
+		print("get")
 		return create()
-	elif request.method == 'POST':
+	
+	elif request.method == 'POST': #directions are taken by 'post' request
+		print("post")
 		logger.info(request.body)
-		data =json.loads(request.body)
+		print("request")
+		print(request.body)   		
+
+		data = json.loads(request.body)  # parsing json string {'data','direction'}    ***here face choosen is req from frontend
+		print(data)      # {"board":[0,0,2,0,0,0,0,0,0,0,0,0,0,2,0,0],"direction":0}     
+
 		return process(data)
+	
 	return create()
 
 def process(data):
+	print("calling process")
+	# oasis = 0, apogee = 1, blah blah = 2,blah blah = 3, blah blah = 4, blah blah = 5, blah blah = 6
+	# current_player = Player.objects.get(name = user)
 	board = data['board']
 	direction = data['direction']
+	#current_player_face_selected  = data['face_selected']  ***from frontend
+	#if current_player_face_selected=='oasis':
+	#	current_player.face = 0
+
+
 	#Collapse by direction
+	#collapse(board,direction,current_player, current_player_face_selected)
+
 	collapse(board,direction)
 	#Add new element
 	lose = addNew(board)
@@ -43,30 +63,51 @@ def process(data):
 	response = {}
 	response['board'] = board
 	response['continue'] = (lose==False)
+	# response['score'] = current_player.score
+	print("response : ",response)    # response :  {'board': [0, 2, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'continue': True}
 	logger.info(response)
-	return JsonResponse(response,safe=False)	
+	return JsonResponse(response,safe=False)    # *** to frontend
 
+#def collapse(board,direction,current_player):
 def collapse(board,direction):
+	print("calling collapse")
 	collapsed = False
 	for i,e in enumerate(board):
-		j = nextIndex(i,direction)
+		print(board)
+		print(i)
+		j = nextIndex(i,direction)  # i is index in nextIndex(index,direction)
+		print("j value")
+		print(j)
+		print(board[i])
+		#print(board[j])
 		if j>=0 and j <=15:
 			if board[i] == board[j] and board[i] != 0:
+				
 				logger.info("Collapsing %d,%d in %d and %d" % (board[i],board[j],i,j))
+				#collapseResult(board,i,j,current_player)
 				collapseResult(board,i,j)
 				collapsed= True
 			if board[j] != 0 and board[i] == 0:
+				
 				logger.info("Collapsing zeros %d,%d in %d and %d" % (board[i],board[j],i,j))
 				collapseZeroResult(board,i,j)
 				collapsed= True
 	if collapsed == True:
 		collapse(board,direction)
 
+#def collapseResult(board,i,j,current_player):
 def collapseResult(board,i,j):
+	print("calling collapseResult")
 	board[i] = board[i]*2;
 	board[j] = 0
+	print("summmmm")
+	print(board[i] + board[i])
+	#current_player.score + = board[i]
+	#current_player.save()
 
+#def collapseZeroResult(board,i,j,current_player):  # it just shifts blocks up or down or left or right
 def collapseZeroResult(board,i,j):
+	print("calling collapseZeroResult")
 	board[i] = board[j];
 	board[j] = 0
 
@@ -76,6 +117,7 @@ def collapseZeroResult(board,i,j):
 # 08 09 10 11
 # 12 13 14 15
 def nextIndex(index,direction):
+	print("calling nextIndex")
 
 	if direction == UP:
 		return index +4;
@@ -92,21 +134,24 @@ def nextIndex(index,direction):
 
 def addNew(board):
 	#Search free spots
+	print("calling addNew")
 	free = []
 	for i,e in enumerate(board):
+		print(i,e)
 		if e==0:
 			free.append(i)
 	#Asign 2 to a random free spots
 	if len(free) >0 :
 		i = randint(0,len(free)-1)
-		logger.info("Next spot index %d of %d"% (i,len(free)))
-		logger.info("Next spot in %d" % (free[i]))
+		print("Next spot index %d of %d"% (i,len(free)))
+		print("Next spot in %d" % (free[i]))
 		board[free[i]] = 2
 		return False
 	else:
 		return True
 	
 def create():
+	print("calling create")
 	#Create a new board with random 2 spots
 	data =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 	first = randint(0,15)
@@ -115,4 +160,6 @@ def create():
 		second = randint(0,15)
 	data[first] = 2;
 	data[second] = 2;
-	return JsonResponse(data,safe=False) 
+	#data[player] = user;   ***if req by frontend
+	print("wohooo")
+	return JsonResponse(data,safe=False)    

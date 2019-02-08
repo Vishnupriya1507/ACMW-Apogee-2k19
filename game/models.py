@@ -1,5 +1,11 @@
 from django.db import models
 
+class Player(models.Model):
+	name = models.CharField(max_length=100)
+	score = models.IntegerField(default=0)
+	face = models.IntegerField(default=0)   # oasis = 0, apogee = 1, blah blah = 2,blah blah = 3, blah blah = 4, blah blah = 5, blah blah = 6
+
+
 class Game(models.Model):
     name = models.CharField(max_length=50)
 
