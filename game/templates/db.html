@@ -70,7 +70,8 @@
 
 </style>
 <div class="container">
-
+<p id = "demo"></p>
+<button type="button" onclick="myfunction()">Click Me!</button>
 
 	<h2>2048</h2>
 
@@ -141,6 +142,9 @@
 <script src="{% static 'hammer.min.js'%}"></script>
 
 <script>
+   
+
+   function myfunction(){document.getElementById('demo').innerHTML = "DONE";}
 	var app = angular.module('GameApp', ["ngResource"]);
 	app.factory('Game', ['$resource',
 	    function($resource) {
@@ -220,7 +224,10 @@
 				GAME_OVER=true;
 			}else{
 				$scope.board = response.board;
+
 			}
+			console.log("yyyyyayyyy");
+			console.log(response.board[0]);
 		}
 		$scope.renew = function() {
 			$scope.board = Game.renew();
@@ -228,13 +235,30 @@
 			document.getElementById('board').focus();
 		}
 		$scope.print = function(n){
-			return $scope.board[n]==0?"":$scope.board[n];
+			var bh;
+			switch($scope.board[n]){
+				case 0: bh = "A";
+						break;
+				case 2: bh = "B";
+						break; 
+				case 4: bh = "C";
+						break;
+				case 8: bh = "D";
+				        break;
+				case 16: alert("GAME END");
+						 window.location = "/";
+						 break;  
+
+			}
+         return $scope.board[n]==0?"":bh;
 		}
 		$scope.getClass = function(n) {
 			return $scope.board[n]==0?"":"box-"+$scope.board[n];
 		}
 		$scope.renew();
 	});
+
+	alert
 </script>
 
 {% endblock %}

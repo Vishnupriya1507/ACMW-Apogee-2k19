@@ -32,13 +32,22 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'game',
+    'allauth',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'allauth.socialaccount.providers.google',
+    
 ]
+AUTHENTICATION_BACKENDS = (
+   
+   'social.backends.google.GoogleOAuth2',
+   
+   'django.contrib.auth.backends.ModelBackend',
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -123,3 +132,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+AUTHENTICATION_BACKENDS = [ 'django.contrib.auth.backends.ModelBackend',
+
+                           'allauth.account.auth_backends.AuthenticationBackend']
+
+SOCIALACCOUNT_PROVIDERS = { 'google': 
+                             { 'SCOPE': ['email'],
+                               'AUTH_PARAMS': { 'access_type': 'online' }
+                             }
+                          }
+
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY="504459446204-v1jtm0h04mgv7ajnipa48d2g6ijp4f68.apps.googleusercontent.com"
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "p-GO-1YXrMWWD5AmYFZPH29A"
+
+
+LOGIN_URL='accounts/google/login/?process=login'
+LOGIN_REDIRECT_URL='/' 
