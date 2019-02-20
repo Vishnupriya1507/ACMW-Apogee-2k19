@@ -22,3 +22,13 @@ class Board(models.Model):
     )
     box = models.IntegerField(default=0)
     number = models.IntegerField(default=0)
+
+
+class Question(models.Model):
+    questionno = models.IntegerField()
+    solution = models.CharField(max_length=50)
+    question = models.CharField(max_length=10000,default="")
+    #idch=models.CharField(max_length=1,de
+
+    def __str__(self):
+        return str(self.questionno)#+self.idch

@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^do', game.views.do, name='do'),
     url(r'^admin/', admin.site.urls),
+    url(r'^answer/',game.views.checkAnswer,name='checkAnswer')
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 """
 urlpatterns = [

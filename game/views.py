@@ -173,3 +173,37 @@ def create():
 	#data[player] = user;   ***if req by frontend
 	print("wohooo")
 	return JsonResponse(data,safe=False)    
+
+
+
+def checkAnswer(request):
+    #if not request.user.is_authenticated() :
+    #   return redirect('/main/login')
+    #if(timer(request)<0):
+    #   logout(request)
+    #   return redirect('/')
+    
+    if request.method == 'POST':
+        #if(timer(request)<0):
+            #return JsonResponse
+        dt = json.loads(request.body.decode('utf-8'))
+        answer = dt['answer']
+        qsno=request.user.currentQs
+        qs=Question.objects.get(questionno=qsno)
+        #print(answer)
+    
+        if qs.solution==answer:
+            request.user.score+=50
+            user.currentQs +=1;
+            # print("s")
+            print(qs.solution)
+            request.user.save()
+            #return redirect("mainpage/")
+            return JsonResponse({'user':request.user.name, 'score':request.user.score})
+    
+        request.user.save()
+        #return redirect("mainpage/")
+        return JsonResponse({'user':request.user.name, 'score':request.user.score})
+
+    else:
+        return HttpResponse("yayyy")
