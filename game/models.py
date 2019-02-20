@@ -3,9 +3,14 @@ from django.contrib.auth.models import AbstractUser
 from allauth.socialaccount.models import SocialAccount
 from django.conf import settings
 from django.contrib.auth.models import User
-class PlayerUser(AbstractUser):
-    name = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, null =True )
+from datetime import timedelta, datetime
+from django.utils import timezone
 
+class PlayerUser(AbstractUser):
+
+    name = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, null =True )
+    regTime = models.DateTimeField(default=timezone.now())
+    time = models.FloatField(default=7200.0)
     score = models.IntegerField(default=0)
     face = models.IntegerField(default=0)   # oasis = 0, apogee = 1, blah blah = 2,blah blah = 3, blah blah = 4, blah blah = 5, blah blah = 6
 

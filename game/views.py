@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
-from .models import Game,PlayerUser,Board
+from .models import Game,PlayerUser,Board ,Question
 from random import randint
 import logging
 from django.contrib.auth import authenticate, login, logout, get_user_model
@@ -13,6 +13,9 @@ from django.contrib.auth.models import User
 import requests
 from django.contrib import auth
 from django.contrib.auth.models import User
+from datetime import timedelta, datetime
+from django.utils import timezone
+
 import json
 
 usr = get_user_model()
@@ -24,6 +27,19 @@ DOWN=1
 LEFT=2
 RIGHT=3
 @ensure_csrf_cookie
+
+
+
+@login_required
+def timer(request):
+	if request.user.is_authenticated():
+		request.user.time = 7200-(timezone.now()-request.user.regTime).total_seconds()
+
+			# print(request.user.time)
+		request.user.save()
+		return request.user.time
+
+
 def index(request):
 	print("calling index")
 	
@@ -40,6 +56,11 @@ def do(request):
 		return create()
 	
 	elif request.method == 'POST': #directions are taken by 'post' request
+#		if(timer(request)<0):
+#			#"Time Over"
+#			logout(request)
+#			return redirect('/')
+		
 		print("post")
 		logger.info(request.body)
 		print("request")
