@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^login/$',views.login, name='login'),
     url(r'^mainpage/$', game.views.index, name='index'),
     #url(r'^mainpage/$',)
+    url(r'^accounts/', include('allauth.urls')),
     url(r'^do', game.views.do, name='do'),
     url(r'^admin/', admin.site.urls),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -40,12 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'allauth.socialaccount.providers.google',
+    'django.contrib.sites',
+    'allauth.account',
+    'allauth.socialaccount',
     
 ]
 AUTHENTICATION_BACKENDS = (
    
-   'social.backends.google.GoogleOAuth2',
-   
+   'allauth.account.auth_backends.AuthenticationBackend',
    'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -64,7 +66,7 @@ ROOT_URLCONF = 'index.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,14 +129,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+SITE_ID = 1
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-AUTHENTICATION_BACKENDS = [ 'django.contrib.auth.backends.ModelBackend',
-
-                           'allauth.account.auth_backends.AuthenticationBackend']
 
 SOCIALACCOUNT_PROVIDERS = { 'google': 
                              { 'SCOPE': ['email'],
@@ -145,8 +145,10 @@ SOCIALACCOUNT_PROVIDERS = { 'google':
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY="504459446204-v1jtm0h04mgv7ajnipa48d2g6ijp4f68.apps.googleusercontent.com"
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "p-GO-1YXrMWWD5AmYFZPH29A"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "p-GO-1YXrMWWD5AmYFZPH29A "
 
 
-LOGIN_URL='accounts/google/login/?process=login'
+#LOGIN_URL='/'
 LOGIN_REDIRECT_URL='/' 
+
+AUTH_USER_MODEL = 'game.PlayerUser'

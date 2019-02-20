@@ -1,18 +1,28 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
-from .models import Game,Player,Board
+from .models import Game,PlayerUser,Board
 from random import randint
 import logging
+from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth.decorators import login_required
+###for get_current_users()
+from django.contrib.auth.models import User
+import requests
+from django.contrib import auth
+from django.contrib.auth.models import User
 import json
 
-#user = request.user
-
+usr = get_user_model()
+print("yayyy")
+print(usr.score)
 logger = logging.getLogger('GAME')
 UP=0
 DOWN=1
 LEFT=2
-RIGHT=3;
+RIGHT=3
 @ensure_csrf_cookie
 def index(request):
 	print("calling index")
