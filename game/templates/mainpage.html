@@ -32,23 +32,85 @@ a:hover{background: purple; color: white;}
       <li class="active">
         <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
       </li>
-      
+
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      
+
     </ul>
   </div>
 </nav>
 <h1> Deal with Distraction</h1>
 <div class="container">
   <div class="dice">
-    <div class="side one"><a href='mainpage/'>ACADS</a></div>   
-        <div class="side two"><a href='mainpage/'>CDA</a></div>
-        <div class="side three"><a href='mainpage/'>PLACEMENTS AND PS</a></div>
-        <div class="side four"><a href='mainpage/'>BOSM</a></div>
-        <div class="side five"><a href='mainpage/'>APOGEE</a></div>
-        <div class="side six"><a href='mainpage/'>OASIS</a></div>
+    <div class="side one"><a href='acads/' onclick="face1()">ACADS</a></div>
+        <div class="side two"><a href='mainpage/' onclick="face2()">CDA</a></div>
+        <div class="side three"><a href='mainpage/' onclick="face3()">PLACEMENTS AND PS</a></div>
+        <div class="side four"><a href='mainpage/' onclick="face4()">BOSM</a></div>
+        <div class="side five"><a href='apogee/' onclick="face5()">APOGEE</a></div>
+        <div class="side six"><a href='mainpage/'onclick="face6()">OASIS</a></div>
   </div>
 </div>
 </body>
 </html>
+
+
+<script>
+var face;
+var url = "do/";
+const face1 = () => {
+   console.log('face1');
+   let face = 0;
+   let faceobj = {'faceselected':face};
+   makeRequest(url,faceobj,"GET");
+}
+
+const face2 = () => {
+   let face = 1;
+   let faceobj = {'faceselected':face};
+   makeRequest(url,faceobj,"GET");
+}
+
+const face3 = () => {
+   let face = 2;
+   let faceobj = {'faceselected':face};
+   makeRequest(url,faceobj,"GET");
+}
+
+const face4 = () => {
+   let face = 3;
+   let faceobj = {'faceselected':face};
+   makeRequest(url,faceobj,"GET");
+}
+
+const face5 = () => {
+   let face = 4;
+   let faceobj = {'faceselected':face};
+   makeRequest(url,faceobj,"GET");
+}
+
+const face6 = () => {
+   let face = 5;
+   let faceobj = {'faceselected':face};
+   makeRequest(url,faceobj,"GET");
+}
+
+
+const makeRequest = (url,data,method) =>{
+  console.log(data);
+  let request = new XMLHttpRequest();
+  request.open(method,url,true);
+  request.setRequestHeader("Content-type","application/json");
+  request.onreadystatechange = () => {
+    if(request.readyState === 4 && request.status === 200){
+      //suuccessfully recieved response
+      let dataRetrieved = JSON.parse(request.responseText);
+      processData(dataRetrieved);
+    }
+    else if(request.readyState === 4 && request.status !== 200){
+      console.log('Error in fetching data...');
+    }
+  };
+  request.send(JSON.stringify(data));
+};
+
+</script>

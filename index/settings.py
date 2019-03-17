@@ -152,3 +152,5 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "p-GO-1YXrMWWD5AmYFZPH29A "
 LOGIN_REDIRECT_URL='/' 
 
 AUTH_USER_MODEL = 'game.PlayerUser'
+
+#SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

@@ -10,10 +10,10 @@ class PlayerUser(AbstractUser):
 
     name = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, null =True )
     regTime = models.DateTimeField(default=timezone.now())
-    time = models.FloatField(default=10.0)
+    time = models.FloatField(default=200.0)
     score = models.IntegerField(default=0)
     face = models.IntegerField(default=0)   # oasis = 0, apogee = 1, blah blah = 2,blah blah = 3, blah blah = 4, blah blah = 5, blah blah = 6
-
+    currentQs = models.IntegerField(default=1)
     def __str__(self):
         return str(self.username)
 

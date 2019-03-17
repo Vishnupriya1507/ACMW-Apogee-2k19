@@ -23,9 +23,10 @@ from . import views
 import game.views
 
 urlpatterns = [
-    url(r'^$',views.main, name='main'),
+    url(r'^mainpage/$',views.main, name='main'),
     url(r'^login/$',views.login, name='login'),
-    url(r'^mainpage/$', game.views.index, name='index'),
+    url(r'^mainpage/apogee/$', game.views.apogee, name='apogee'),
+    url(r'^mainpage/acads/$', game.views.Acads, name='Acads'),
     #url(r'^mainpage/$',)
     url(r'^accounts/', include('allauth.urls')),
     url(r'^do', game.views.do, name='do'),

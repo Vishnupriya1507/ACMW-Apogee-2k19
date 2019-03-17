@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .models import Game,PlayerUser,Board ,Question
@@ -26,21 +26,35 @@ UP=0
 DOWN=1
 LEFT=2
 RIGHT=3
-@ensure_csrf_cookie
+#@ensure_csrf_cookie
 
 
 
-# @login_required
-# def timer(request):
-#     #if request.user.is_authenticated():
-#     request.user.time = 30-(timezone.now()-request.user.regTime).total_seconds()
+#@login_required
+def timer(user_):
+    # if request.user.is_authenticated():
+    #print("yayyy")
+    user_.time =float(200-(timezone.now()-user_.regTime).total_seconds())
+    #print("yoyoyo")
+    # print(timezone.now())
+    # print(user_.regTime)
+    print((timezone.now()-user_.regTime).total_seconds())
+    user_.save()
+    # return HttpResponse("yoyaayy")
+    return float(user_.time)
+@login_required(login_url='/login/')
+def apogee(request):
+    print("calling index")
+    
+    game = Game()
 
-#         # print(request.user.time)
-#     request.user.save()
-#     return request.user.time
+    games = Game.objects.all()
+
+    return render(request, 'apogee.html', {'games': games})
 
 
-def index(request):
+@login_required(login_url='/login/')
+def Acads(request):
     print("calling index")
     
     game = Game()
@@ -49,19 +63,29 @@ def index(request):
 
     return render(request, 'db.html', {'games': games})
 
+#@login_required(login_url='/login/')
 def do(request):
     print("calling do")
     if request.method == 'GET':    # page is called by 'get' request
-        print("get")
+        #dta = json.loads(request.body)
+        #request.user.face = dta['faceselected'] 
+        #request.user.save()
+        #print("get")
+        print(request.user)
+        #print(request.user.face)
         return create()
-    
-    elif request.method == 'POST': #directions are taken by 'post' request
-        # if(timer(request)<0):
-        #     "Time Over"
-        #     logout(request)
-        #     return redirect('/')
 
+    elif request.method == 'POST': #directions are taken by 'post' request
+        # if(timer(request.user)<0):
+        #     print("Time Over")
+        #     #logout(request)
+        #     return redirect('/')
+        # revealQues(request)
+        
+        #{'answer': ,'userw': ,'board_state':false}
+        #{'board': ,'direction'}
         print("post")
+        print(request)
         logger.info(request.body)
         print("request")
         print(request.body)  
@@ -72,20 +96,21 @@ def do(request):
         print(request.user)
         data = json.loads(request.body)  # parsing json string {'data','direction'}    ***here face choosen is req from frontend
         print(data)      # {"board":[0,0,2,0,0,0,0,0,0,0,0,0,0,2,0,0],"direction":0}     
-
-        return process(data,request.user)
-    
+        # if(data['board_state']!=False):
+        #     return process(data,request.user)
+        return process(data,request.user,request)
     return create()
 
-def process(data,user_):
+#@login_required(login_url='/login/')
+def process(data,user_,request):
     print("calling process")
     # oasis = 0, apogee = 1, blah blah = 2,blah blah = 3, blah blah = 4, blah blah = 5, blah blah = 6
-    
+
+    dict_ = revealQues(request)
     board = data['board']
     direction = data['direction']
-    #current_player_face_selected  = data['face_selected']  ***from frontend
-    #if current_player_face_selected=='oasis':
-    #   current_player.face = 0
+    #user.face = data['faceselected']  #***from frontend
+    #user.save()
 
     user_score = user_.score
     #Collapse by direction
@@ -99,11 +124,12 @@ def process(data,user_):
     response['board'] = board
     response['continue'] = (lose==False)
     response['score'] = user_score
-    print("response : ",response)    # response :  {'board': [0, 2, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'continue': True}
+    response['revealQues_dict'] = dict_
+    print("response : ",response)    # response :  {'board': [0, 2, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'continue': True, score : 200}
     logger.info(response)
     return JsonResponse(response,safe=False)    # *** to frontend
 
-#def collapse(board,direction,current_player):
+#@login_required(login_url='/login/')
 def collapse(board,direction,user_):
     print("calling collapse")
     collapsed = False
@@ -130,7 +156,7 @@ def collapse(board,direction,user_):
     if collapsed == True:
         collapse(board,direction,user_)
 
-#def collapseResult(board,i,j,current_player):
+#@login_required(login_url='/login/')
 def collapseResult(board,i,j,user_):
     print("calling collapseResult")
     board[i] = board[i]*2;
@@ -144,7 +170,7 @@ def collapseResult(board,i,j,user_):
     #print(current_player.score)
     #current_player.save()
 
-#def collapseZeroResult(board,i,j,current_player):  # it just shifts blocks up or down or left or right
+#@login_required(login_url='/login/')
 def collapseZeroResult(board,i,j,user_):
     print("calling collapseZeroResult")
     board[i] = board[j];
@@ -155,6 +181,7 @@ def collapseZeroResult(board,i,j,user_):
 # 04 05 06 07
 # 08 09 10 11
 # 12 13 14 15
+#@login_required(login_url='/login/')
 def nextIndex(index,direction):
     print("calling nextIndex")
 
@@ -171,6 +198,7 @@ def nextIndex(index,direction):
             return -1
         return index-1
 
+#@login_required(login_url='/login/')
 def addNew(board):
     #Search free spots
     print("calling addNew")
@@ -189,6 +217,7 @@ def addNew(board):
     else:
         return True
     
+#@login_required(login_url='/login/')
 def create():
     print("calling create")
     #Create a new board with random 2 spots
@@ -203,26 +232,44 @@ def create():
     print("wohooo")
     return JsonResponse(data,safe=False)    
 
+@login_required(login_url='/login/')
+def revealQues(request):
+    
+    data = {}
+    count = (200-request.user.time)/(request.user.currentQs*20)
+    #if(count >=1 ):
+    curr_ques = Question.objects.get(questionno = request.user.currentQs)
+    data['curr_ques_num'] = curr_ques.questionno
+    data['curr_ques_Ques'] = curr_ques.question
+    #data['curr_ques_ans'] = curr_ques.solution
+    data['board_state'] = False
+    request.user.currentQs = request.user.currentQs + 1
+    request.user.save()
+    print(data)
 
-
+    #checkAnswer(request)
+    return data
+ 
+@login_required(login_url='/login/')
 def checkAnswer(request):
     #if not request.user.is_authenticated() :
     #   return redirect('/main/login')
-    #if(timer(request)<0):
+    # if(timer(request.user)<0):
     #   logout(request)
-    #   return redirect('/')
+        # return redirect('/')
     
     if request.method == 'POST':
         #if(timer(request)<0):
             #return JsonResponse
         dt = json.loads(request.body.decode('utf-8'))
         answer = dt['answer']
-        qsno=request.user.currentQs
+        board_state = dt['board_state']
+        qsno = request.user.currentQs - 1
         qs=Question.objects.get(questionno=qsno)
         #print(answer)
     
         if qs.solution==answer:
-            request.user.score+=50
+            request.user.score+=10000
             user.currentQs +=1;
             # print("s")
             print(qs.solution)
