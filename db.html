@@ -3,7 +3,6 @@
 
 {% block content %}
 <style type="text/css">
-
 .modal {
 	  display: none; /* Hidden by default */
 	  position: fixed; /* Stay in place */
@@ -17,7 +16,6 @@
 	  background-color: rgb(0,0,0); /* Fallback color */
 	  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 	}
-
 	/* Modal Content */
 	.modal-content {
 	  background-color: #fefefe;
@@ -26,7 +24,6 @@
 	  border: 1px solid #888;
 	  width: 80%;
 	}
-
 	/* The Close Button */
 	.close {
 	  color: #aaaaaa;
@@ -34,14 +31,12 @@
 	  font-size: 28px;
 	  font-weight: bold;
 	}
-
 	.close:hover,
 	.close:focus {
 	  color: #000;
 	  text-decoration: none;
 	  cursor: pointer;
 	}
-
 .board{
 	width:343px;
 	background: #ab9c8e;
@@ -201,22 +196,16 @@
 <script src="{% static 'hammer.min.js'%}"></script>
 
 <script>
-
    function display(str){
    document.getElementById('check').innerHTML =str;
    modal.style.display = "block";
-
    console.log(str);
    console.log("done");
-
    }
-
-
    const getAns = () => {
 	console.log(document.getElementById('myText').value);
 	return document.getElementById('myText').value;
 };
-
 const makeRequest = (url,data,method) =>{
 	var csrf_token = document.cookie.split('=')[1];
   console.log(data);
@@ -236,40 +225,33 @@ const makeRequest = (url,data,method) =>{
 	};
 	request.send(JSON.stringify(data));
 };
-
 const sendans = () => {
 let ans = getAns();
 let obj = {'answer':ans, 'board_state':false, 'user_': document.getElementById('user-username').innerHTML };
-let url = '/answer/';
+modal.style.display = "none";
+let url = '/do/';
 makeRequest(url,obj,"POST");
 };
    // Get the modal
 	var modal = document.getElementById('myModal');
-
 	// Get the button that opens the modal
 	var btn = document.getElementById("myBtn");
-
 	// Get the <span> element that closes the modal
 	var span = document.getElementsByClassName("close")[0];
-
 	// When the user clicks the button, open the modal
 	btn.onclick = function() {
 	  modal.style.display = "block";
 	}
-
 	// When the user clicks on <span> (x), close the modal
 	span.onclick = function() {
 	  modal.style.display = "none";
 	}
-
 	// When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {
 	  if (event.target == modal) {
 	    modal.style.display = "none";
 	  }
 	}
-
-
    function myfunction(){document.getElementById('demo').innerHTML = "DONE";}
 	var app = angular.module('GameApp', ["ngResource"]);
 	app.factory('Game', ['$resource',
@@ -351,7 +333,6 @@ makeRequest(url,obj,"POST");
 			console.log("start");
 			//console.log(response.revealQues_dict.curr_ques_Ques);
 			//display(response.revealQues_dict.curr_ques_Ques);
-
 			console.log("end");
 			if(!response.continue) {
 				alert("Game over");
@@ -362,19 +343,16 @@ makeRequest(url,obj,"POST");
 				}
 				else {$scope.board = response.board;
 			    $scope.score = response.score;}
-
 			}
 			console.log("yyyyyayyyy");
 			console.log(response.board[0]);
 			console.log($scope.score);
 		document.getElementById('scoredisp').innerHTML = 0;	
-
 		}
 		$scope.renew = function() {
 			$scope.board = Game.renew();
 			GAME_OVER=false;
 			document.getElementById('board').focus();
-
 		}
 		$scope.print = function(n){
 			var bh;
@@ -400,7 +378,6 @@ makeRequest(url,obj,"POST");
          
 		}
 		// 
-
 		$scope.getClass = function(n) {
 			return $scope.board[n]==0?"":"box-"+$scope.board[n];
 		}
