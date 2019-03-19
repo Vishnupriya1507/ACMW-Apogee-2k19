@@ -63,20 +63,12 @@ def get_current_timezone():
 
 #@login_required
 def timer(user_):
-    # if request.user.is_authenticated():
-    #print("yayyy")
+   
     user_.time = float(7200-(timezone.now()-user_.regTime).total_seconds())
     current_time =  datetime.now()
-    #user_.time = current_time1.hour*3600 + current_time1.minute*60 + current_time1.second
     print("yoyoyo")
-    # print(timezone.now() ," ",get_current_timezone()," ", datetime.now()," ",user_.regTime)
     print("timezone.now()-user_.regTime : ", (timezone.now()-user_.regTime).total_seconds())
-    # print(user_.time)
-    # print("regTime")
-    # print(user_.regTime.time)
-    # print((timezone.now()-user_.regTime).total_seconds())
     user_.save()
-    # return HttpResponse("yoyaayy")
     return float(user_.time)
 
 
@@ -105,10 +97,7 @@ def Acads(request):
 def do(request):
     print("calling do")
     if request.method == 'GET':    # page is called by 'get' request
-        #dta = json.loads(request.body)
-        #request.user.face = dta['faceselected'] 
-        #request.user.save()
-        #print("get")
+        
         print(request.user)
         #print(request.user.face)
         return create()
@@ -149,20 +138,18 @@ def process(data,user_,request):
     if  data['board_state']==1:
         board = data['board']
         direction = data['direction']
-        #user.face = data['faceselected']  #***from frontend
-        #user.save()
+       
 
         user_score = user_.score
         print("*************************************************************")
         
         #Build response
-        # timecheck = timer(request.user)
+        
         response = {}
         count = (7200-request.user.time)/(request.user.currentQs*60)
         
         print("request.user.time : ", request.user.time," ","request.user.currentQs*30 : ", request.user.currentQs*30)
         if(count >=1 ):
-        # if (request.user.currentQs*60 < count <(request.user.currentQs+1)*60):
             print("count is >= 1")
             revealQues_dict = revealQues(request)
             print("revealQues_dict['curr_ques_Ques'] : ", type(revealQues_dict['curr_ques_Ques']))
@@ -199,24 +186,9 @@ def process(data,user_,request):
     # frontend sends {"answer":__ , 'user':__}
     elif data['board_state'] == 3:
         response={}
-        # response['score'] = checkAnswer_dict_['score']
         response['board_state'] = 3
         response['continue'] = True
-        # response['is_correct'] = checkAnswer_dict_['is_correct']
-        # user_anwer = data['answer']
-        # user_ = data['user_']
-
-        # checkAnswer_dict_ =  checkAnswer(request)
-        # print("checkAnswer_dict_ : ", checkAnswer_dict_)
-        # response = {}
-        # board = data['board']
-        # direction = data['direction']
-        # response['board'] = board
-        # response['continue'] = (lose==False)
-        # response['score'] = checkAnswer_dict_['score']
-        # response['board_state'] = True
-        # response['is_correct'] = checkAnswer_dict_['is_correct']
-        # print("CHECKING THE ANS SCORE",response)
+        
     return JsonResponse(response,safe=False)
         
 #@login_required(login_url='/login/')
@@ -256,10 +228,6 @@ def collapseResult(board,i,j,user_):
     #print(board[i] + board[i])
     user_.score = user_.score + board[i]
     user_.save()
-    print(user_.score)
-    #current_player.score = current_player.score +  board[i]
-    #print(current_player.score)
-    #current_player.save()
 
 #@login_required(login_url='/login/')
 def collapseZeroResult(board,i,j,user_):
