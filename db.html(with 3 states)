@@ -220,6 +220,7 @@ const makeRequest = (url,data,method) =>{
 			let dataRetrieved = JSON.parse(request.responseText);
 			console.log(dataRetrieved);
 			yes = dataRetrieved['board_state'];
+			//yes =1;
 		}
 		else if(request.readyState === 4 && request.status !== 200){
 			console.log('Error in fetching data...');
@@ -341,7 +342,7 @@ makeRequest(url,obj,"POST");
 			 	GAME_OVER=true;
 			 }else{
 				if(response.board_state == 2){
-					yes = 3;
+					// yes = 3;
 					display(response.curr_ques_Ques);
 				}
 				else if(response.board_state == 1){$scope.board = response.board;
@@ -360,8 +361,8 @@ makeRequest(url,obj,"POST");
 		}
 		$scope.print = function(n){
 			var bh;
-				var arr = ["A","B","C","D","E","F","G"];
-				if($scope.board[n] == 512){alert("GAME END");
+				var arr = ["A","B","C","D","E","F","G","H","I","J","K","L","M"];
+				if($scope.board[n] == 4096){alert("GAME END");
 						 window.location = "/";}
 				bh = arr[Math.log2($scope.board[n])];
 				document.getElementById('scoredisp').innerHTML = $scope.score;
