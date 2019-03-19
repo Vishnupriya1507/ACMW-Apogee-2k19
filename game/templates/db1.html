@@ -1,0 +1,413 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<style type="text/css">
+
+.modal {
+	  display: none; /* Hidden by default */
+	  position: fixed; /* Stay in place */
+	  z-index: 1; /* Sit on top */
+	  padding-top: 100px; /* Location of the box */
+	  left: 0;
+	  top: 0;
+	  width: 100%; /* Full width */
+	  height: 100%; /* Full height */
+	  overflow: auto; /* Enable scroll if needed */
+	  background-color: rgb(0,0,0); /* Fallback color */
+	  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+
+	/* Modal Content */
+	.modal-content {
+	  background-color: #fefefe;
+	  margin: auto;
+	  padding: 20px;
+	  border: 1px solid #888;
+	  width: 80%;
+	}
+
+	/* The Close Button */
+	.close {
+	  color: #aaaaaa;
+	  float: right;
+	  font-size: 28px;
+	  font-weight: bold;
+	}
+
+	.close:hover,
+	.close:focus {
+	  color: #000;
+	  text-decoration: none;
+	  cursor: pointer;
+	}
+
+.board{
+	width:343px;
+	background: #ab9c8e;
+	display: block;
+}
+.box {
+	width:70px;
+	height: 70px;
+	margin-left: 10px;
+	margin-top:10px;
+	margin-bottom:0px;
+	display: inline-block;
+	background: #e9ded1;
+	margin-right: 0px;
+	padding-right: 0px;
+}
+.box-2{
+	background: #eee4da;
+}
+.box-4{
+	background:#ede0c8;
+}
+.box-8{
+	background: #f2b179;
+}
+.box-16{
+	background: #f59563;
+}
+.box-32{
+	background:#f67c5f;
+}
+.box-64{
+	background: #f65e3b;
+}
+.box-128{
+	background: #edcf72;
+}
+.box-256{
+	background: #edcc61;
+}
+.box-512{
+	background: #edc850;
+}
+.box-1024{
+	background: #edc53f;
+}
+.box-2048{
+	background: #edc22e;
+	box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.55556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+}
+.edge {
+	margin-right: 10px;
+}
+.last {
+	margin-bottom: 10px;
+}
+.capture {
+    background: transparent;
+    border: none;
+    height: 90px;
+    width: 90px;
+    text-align: center;
+    font-size: 20px;
+}
+</style>
+<div class="container">
+<p id = "demo"></p>
+<button type="button" onclick="myfunction()">Click Me!</button>
+
+	<h2>2048</h2>
+     <span id="user-username">{{ request.user.username }}</span>
+     <div>SCORE:</div>
+     <span id = "scoredisp"></span>
+
+    <h2>Modal Example</h2>
+
+<!-- Trigger/Open The Modal -->
+<button id="myBtn">Open Modal</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>First Name: <input type="text" id="myText" value="Mickey"></p>
+		<p id = "check">Hello</p>
+		<button id = "bt" onclick = "sendans()">Submit</button>
+  </div>
+
+</div>
+
+	<div ng-app="GameApp" ng-controller="GameCtrl" >
+		<div class="row">
+			<div class="col-md-offset-8 col-md-2">
+				<!-- <button ng-click="renew()" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon glyphicon-repeat" aria-hidden="true"></span>
+				 New</button> -->
+			 </div>
+		</div>
+		<br/>
+		<div id="board" class="board" ng-keyup="key($event)" tabindex="1">
+			<div class="box" ng-class="getClass(0)">
+				<input ng-value="print(0)" disabled class="capture">
+			</div>
+			<div class="box" ng-class="getClass(1)">
+				<input ng-value="print(1)" disabled class="capture">
+			</div>
+			<div class="box" ng-class="getClass(2)">
+				<input ng-value="print(2)" disabled class="capture">
+			</div>
+			<div class="box edge" ng-class="getClass(3)">
+				<input ng-value="print(3)" disabled class="capture">
+			</div>
+			<div class="box" ng-class="getClass(4)">
+				<input ng-value="print(4)" disabled class="capture">
+			</div>
+			<div class="box" ng-class="getClass(5)">
+				<input ng-value="print(5)" disabled class="capture">
+			</div>
+			<div class="box" ng-class="getClass(6)">
+				<input ng-value="print(6)" disabled class="capture">
+			</div>
+			<div class="box edge" ng-class="getClass(7)">
+				<input ng-value="print(7)" disabled class="capture">
+			</div>
+			<div class="box" ng-class="getClass(8)">
+				<input ng-value="print(8)" disabled class="capture">
+			</div>
+			<div class="box" ng-class="getClass(9)">
+				<input ng-value="print(9)" disabled class="capture">
+			</div>
+			<div class="box" ng-class="getClass(10)">
+				<input ng-value="print(10)" disabled class="capture">
+			</div>
+			<div class="box edge" ng-class="getClass(11)">
+				<input ng-value="print(11)" disabled class="capture">
+			</div>
+			<div class="box last" ng-class="getClass(12)">
+				<input ng-value="print(12)" disabled class="capture">
+			</div>
+			<div class="box last" ng-class="getClass(13)">
+				<input ng-value="print(13)" disabled class="capture">
+			</div>
+			<div class="box last" ng-class="getClass(14)">
+				<input ng-value="print(14)" disabled class="capture">
+			</div>
+			<div class="box edge last" ng-class="getClass(15)">
+				<input ng-value="print(15)" disabled class="capture">
+			</div>
+		</div>
+
+	</div>
+
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<script src="//code.angularjs.org/1.5.8/angular-resource.min.js"></script>
+<script src="{% static 'hammer.min.js'%}"></script>
+
+<script>
+
+   function display(str){
+   document.getElementById('check').innerHTML =str;
+   modal.style.display = "block";
+
+   console.log(str);
+   console.log("done");
+
+   }
+
+
+   const getAns = () => {
+	console.log(document.getElementById('myText').value);
+	return document.getElementById('myText').value;
+};
+
+const makeRequest = (url,data,method) =>{
+	var csrf_token = document.cookie.split('=')[1];
+  console.log(data);
+	let request = new XMLHttpRequest();
+	request.open(method,url,true);
+	request.setRequestHeader("Content-type","application/json");
+	request.setRequestHeader("X-CSRFToken",csrf_token);
+	request.onreadystatechange = () => {
+		if(request.readyState === 4 && request.status === 200){
+			//suuccessfully recieved response
+			let dataRetrieved = JSON.parse(request.responseText);
+			//processData(dataRetrieved);
+		}
+		else if(request.readyState === 4 && request.status !== 200){
+			console.log('Error in fetching data...');
+		}
+	};
+	request.send(JSON.stringify(data));
+};
+
+const sendans = () => {
+let ans = getAns();
+let obj = {'answer':ans, 'board_state':false, 'user_': document.getElementById('user-username').innerHTML };
+let url = '/answer/';
+makeRequest(url,obj,"POST");
+};
+   // Get the modal
+	var modal = document.getElementById('myModal');
+
+	// Get the button that opens the modal
+	var btn = document.getElementById("myBtn");
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	// When the user clicks the button, open the modal
+	btn.onclick = function() {
+	  modal.style.display = "block";
+	}
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+	  modal.style.display = "none";
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	  if (event.target == modal) {
+	    modal.style.display = "none";
+	  }
+	}
+
+
+   function myfunction(){document.getElementById('demo').innerHTML = "DONE";}
+	var app = angular.module('GameApp', ["ngResource"]);
+	app.factory('Game', ['$resource',
+	    function($resource) {
+	      return $resource('/do', {}, {
+	        renew: {
+	          method: 'GET',
+	          isArray: true
+	        },
+ 			process: {
+	          method: 'POST'
+	        }
+	      });
+	    }
+	]);
+	app.config(['$httpProvider',function($httpProvider) {
+		$httpProvider.defaults.xsrfCookieName = 'csrftoken';
+		$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+	}]);
+	app.controller("GameCtrl",function($scope,Game){
+		$scope.board = [];
+		var UP=0;
+		var DOWN=1;
+		var LEFT=2;
+		var RIGHT=3;
+		var GAME_OVER=false;
+		
+		for(var i = 0;i<16;i++){
+			$scope.board[i] = 0;
+		}
+		var hammertime = new Hammer(document.body);
+		hammertime.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+		hammertime.on('swipeleft', function(ev) {
+			$scope.process(LEFT);
+		});
+		hammertime.on('swiperight', function(ev) {
+			$scope.process(RIGHT);
+		});
+		hammertime.on('swipeup', function(ev) {
+			$scope.process(UP);
+		});
+		hammertime.on('swipedown', function(ev) {
+			$scope.process(DOWN);
+		});
+		$scope.key =function(event) {
+			console.log(event.keyCode);
+			var direction=-1;
+			switch(event.keyCode){
+				case 38:
+					direction = UP;
+					break;
+				case 40:
+					direction =DOWN;
+					break;
+				case 37:
+					direction = LEFT;
+					break;
+				case 39:
+					direction = RIGHT;
+					break;
+			}
+			if(direction != -1) {
+				$scope.process(direction);
+			}
+		}
+		$scope.process = function(direction){
+			if(GAME_OVER){
+				alert("Game over");
+				return;
+			}
+			Game.process({
+				board:$scope.board,
+				direction: direction,
+				board_state: true
+			}).$promise.then(showBoard);
+		}
+		var showBoard = function(response) {
+			
+			console.log(response);
+			console.log("start");
+			//console.log(response.revealQues_dict.curr_ques_Ques);
+			//display(response.revealQues_dict.curr_ques_Ques);
+
+			console.log("end");
+			if(!response.continue) {
+				alert("Game over");
+				GAME_OVER=true;
+			}else{
+				if(response.board_state == true){
+					display(response.curr_ques_Ques);
+				}
+				else {$scope.board = response.board;
+			    $scope.score = response.score;}
+
+			}
+			console.log("yyyyyayyyy");
+			console.log(response.board[0]);
+			console.log($scope.score);
+		document.getElementById('scoredisp').innerHTML = 0;	
+
+		}
+		$scope.renew = function() {
+			$scope.board = Game.renew();
+			GAME_OVER=false;
+			document.getElementById('board').focus();
+
+		}
+		$scope.print = function(n){
+			var bh;
+			switch($scope.board[n]){
+				case 0: bh = "A";
+						break;
+				case 2: bh = "acads";
+						break;
+				case 4: bh = "C";
+						break;
+				case 8: bh = "D";
+				        break;
+				case 16: alert("GAME END");
+						 window.location = "/";
+						 break;
+			}
+			document.getElementById('scoredisp').innerHTML = $scope.score;
+         return $scope.board[n]==0?"":bh;
+         
+         //document.getElementById('scoredisp').innerHTML = $scope.score;
+        
+         
+         
+		}
+		// 
+
+		$scope.getClass = function(n) {
+			return $scope.board[n]==0?"":"box-"+$scope.board[n];
+		}
+		$scope.renew();
+	});
+	alert
+</script>
+
+{% endblock %}
