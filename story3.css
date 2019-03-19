@@ -1,0 +1,26 @@
+@keyframes mymove {
+    /* 0% is the beginning of animation */
+    0% {
+        background-position: 0 0;
+    }
+    /* This is the end… where we set it to the size of the background image for y axis (0 being the x axis) */
+    100% {
+        background-position: 0 860px;
+    }
+}
+/* same for webkit browsers */
+@-webkit-keyframes mymove {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 0 860px;
+    }
+
+.animate {
+    /* Here we assign our 'mymove' animation to the class .view, we ask it to last 3 seconds, linearly (no ease at start or end), and repeating infinitely */
+    animation: mymove 5s linear infinite;
+    /* again webkit browsers */
+    -webkit-animation:mymove 5s linear infinite;
+    background: url('77.jpg');
+}
