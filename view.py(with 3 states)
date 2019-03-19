@@ -156,9 +156,9 @@ def process(data,user_,request):
         print("*************************************************************")
         
         #Build response
-        timecheck = timer(request.user)
+        # timecheck = timer(request.user)
         response = {}
-        count = (7200-request.user.time)/((request.user.currentQs+2)*30)
+        count = (7200-request.user.time)/(request.user.currentQs*60)
         print("request.user.time : ", request.user.time," ","request.user.currentQs*30 : ", request.user.currentQs*30)
         if(count >=1 ):
             print("count is >= 1")
@@ -325,7 +325,7 @@ def create():
 def revealQues(request):
     
     data = {}
-    count = (7200-request.user.time)/((request.user.currentQs+2)*30)
+    count = (7200-request.user.time)/(request.user.currentQs*60)
     if(count >=1 ):
         print("revealQues Questionneeds to be popped up")
         curr_ques = Question.objects.get(questionno = request.user.currentQs)
@@ -363,7 +363,7 @@ def checkAnswer(request):
 
             request.user.score+=10000
             print("CHECKING THE ANS SCORE",request.user.score)
-            request.user.currentQs +=1;
+            
             # print("s")
             print(qs.solution)
             request.user.save()
@@ -374,7 +374,7 @@ def checkAnswer(request):
             dict_['is_correct'] = True
             print("CHECKING THE ANS SCORE",dict_['score'], "dict_ after user's answer is correct :",dict_)
             return dict_
-    
+        request.user.currentQs +=1;
         request.user.save()
         dict_ = {}
         dict_['score'] = request.user.score
