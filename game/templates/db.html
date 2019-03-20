@@ -24,6 +24,7 @@
 	  border: 1px solid #888;
 	  width: 80%;
 	}
+
 	/* The Close Button */
 	.close {
 	  color: #aaaaaa;
@@ -101,9 +102,7 @@
     text-align: center;
     font-size: 20px;
 }
-#result{
-display: none;
-}
+
 </style>
 <div class="container">
 <p id = "demo"></p>
@@ -129,11 +128,13 @@ display: none;
 		<p id = "check">Hello</p>
 		<button id = "bt" onclick = "sendans()">Submit</button>
 		<button id = "skip" onclick = "skipped()">Skip</button>
-		<p id = "result"></p>
+
   </div>
 
 </div>
-
+<div id="dialog" style="display: none">
+Checking answer
+</div>
 	<div ng-app="GameApp" ng-controller="GameCtrl" >
 		<div class="row">
 			<div class="col-md-offset-8 col-md-2">
@@ -201,6 +202,7 @@ display: none;
 <script src="{% static 'hammer.min.js'%}"></script>
 
 <script>
+
 	var yes = 1;
    function display(str){
    document.getElementById('check').innerHTML =str;
@@ -212,6 +214,7 @@ display: none;
 	console.log(document.getElementById('myText').value);
 	return document.getElementById('myText').value;
 };
+
 const makeRequest = (url,data,method) =>{
 	var csrf_token = document.cookie.split('=')[1];
   console.log(data);
@@ -224,7 +227,15 @@ const makeRequest = (url,data,method) =>{
 			//suuccessfully recieved response
 			let dataRetrieved = JSON.parse(request.responseText);
 			console.log(dataRetrieved);
-		//document.getElementById("result").innerHTML = dataRetrieved['is_correct'];
+
+
+			if(dataRetrieved['is_correct'] == true){
+				result = "Congratulation, your answer is correct";
+			}
+			else{ result = "Oops !! Your answer is wrong";}
+			document.getElementById("dialog").innerHTML = result;
+		//	document.getElementById('scoredisp').innerHTML = dataRetrieved['score'];
+
 			// yes = dataRetrieved['board_state'];
 			yes =1;
 		}
@@ -237,6 +248,8 @@ const makeRequest = (url,data,method) =>{
 const sendans = () => {
 let ans = getAns();
 let obj = {'answer':ans, 'board_state': 2, 'user_': document.getElementById('user-username').innerHTML };
+
+//modal-content.style.display = "none";
 modal.style.display = "none";
 let url = '/do/';
 makeRequest(url,obj,"POST");
@@ -344,6 +357,7 @@ makeRequest(url,obj,"POST");
 			}).$promise.then(showBoard);
 		}
 		var showBoard = function(response) {
+				document.getElementById("dialog").innerHTML = "Checking answer";
 			console.log(response);
 			console.log("start");
 			//console.log(response.revealQues_dict.curr_ques_Ques);
@@ -389,6 +403,27 @@ makeRequest(url,obj,"POST");
 		$scope.renew();
 	});
 	alert
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
+<link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+    rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(function () {
+        $("#bt").click(function () {
+            $("#dialog").dialog({
+                modal: true,
+                title: "jQuery Dialog",
+               width: 300,
+                height: 150,
+                open: function (event, ui) {
+                    setTimeout(function () {
+                        $("#dialog").dialog("close");
+                    }, 3000);
+                }
+            });
+        });
+    });
 </script>
 
 {% endblock %}
