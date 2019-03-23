@@ -207,9 +207,9 @@ def process(data,user_,request):
             # response['continue'] = (lose==False)
             response['continue'] = True
         response['board'] = board
-        
         response['score'] = user_score
-        # response['board_state'] =1
+        response['timer_time'] = (7200-request.user.time)
+
 
 
     elif data['board_state'] ==2:
@@ -221,6 +221,7 @@ def process(data,user_,request):
         response['board_state'] = 1
         response['is_correct'] = checkAnswer_dict_['is_correct']
         response['continue'] = True
+        response['timer_time'] = (7200-request.user.time)
         print("CHECKING THE ANS SCORE",response)
         # return JsonResponse(response,safe=False)    # *** to frontend
     
@@ -230,6 +231,7 @@ def process(data,user_,request):
         response={}
         response['board_state'] = 3
         response['continue'] = True
+        response['timer_time'] = (7200-request.user.time)
         
     return JsonResponse(response,safe=False)
         

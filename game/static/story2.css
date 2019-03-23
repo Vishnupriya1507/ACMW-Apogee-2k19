@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Caveat');
+.typew{
+  width: 550px;
+  top:70%;
+  left: 10%;
+background: none;
+}
+
+
+h1 {
+  font-weight: bolder;
+  font-size: 5em;
+  font-family: Caveat;
+  color: #12196d;
+}
+
+span {
+  border-right: .05em solid;
+  animation: caret 1s steps(1) infinite;
+}
+
+@keyframes caret {
+  50% {
+    border-color: transparent;
+  }
+}

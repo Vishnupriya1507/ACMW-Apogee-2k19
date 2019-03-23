@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif');
+@import url('https://fonts.googleapis.com/css?family=Righteous');
+canvas {
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  z-index:-1;
+  
+}
+
+.text-box {	
+
+margin:  auto;
+text-align:center; 
+   padding: 1%;
+   background-color: #fff;
+   width: 500px;
+   min-height: 300px;
+   border-radius: 5px;
+   z-index:999;
+   opacity:0.9 ;
+}
+h1{
+color:#fff;
+ text-align:center;
+ font-size:60px;
+ font-family: Bree Serif;
+ }
+ h2{
+ color:#fff;
+ text-align:center;
+ font-size:40px;
+ font-family: Righteous;
+}
