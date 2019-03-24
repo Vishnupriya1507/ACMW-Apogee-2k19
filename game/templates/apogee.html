@@ -1,43 +1,684 @@
-
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
 <html>
 <head>
-
-<link rel="stylesheet" type="text/css" href="apogee.css">
-<link rel="stylesheet" href="jquery.countup.css" />
+<style type="text/css">
+@import url('https://fonts.googleapis.com/css?family=Acme');
+  /*body {
+    height: 100vh; 
+    background-image: url('static/apogeeb.jpg');
+   overflow: hidden;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }*/
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100vw; /* Full width */
+    height: 100vh; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+.board{
+  width:343px;
+  background: #ab9c8e;
+  display: block;
+}
+.box {
+  width:70px;
+  height: 70px;
+  margin-left: 10px;
+  margin-top:10px;
+  margin-bottom:0px;
+  display: inline-block;
+  background: #e9ded1;
+  margin-right: 0px;
+  padding-right: 0px;
+}
+.box-2{
+  background: #eee4da;
+}
+.box-4{
+  background:#ede0c8;
+}
+.box-8{
+  background: #f2b179;
+}
+.box-16{
+  background: #f59563;
+}
+.box-32{
+  background:#f67c5f;
+}
+.box-64{
+  background: #f65e3b;
+}
+.box-128{
+  background: #edcf72;
+}
+.box-256{
+  background: #edcc61;
+}
+.box-512{
+  background: #edc850;
+}
+.box-1024{
+  background: #edc53f;
+}
+.box-2048{
+  background: #edc22e;
+  box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.55556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+}
+.edge {
+  margin-right: 10px;
+}
+.last {
+  margin-bottom: 10px;
+}
+.capture {
+    background: transparent;
+    border: none;
+    height: 90px;
+    width: 90px;
+    text-align: center;
+    font-size: 20px;
+}
+canvas {
+  opacity: 0.5;
+  z-index:-1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+h1{
+  color:#fff;
+   text-align:center;
+   font-size:60px;
+   font-family: Acme;
+}
+#countdown{
+  position:absolute;
+  bottom:0;
+  left:0;
+  z-index: 2;
+}
+ .countdownHolder{
+  width:150px;
+  bottom:0;
+  left:0;
+  font: 15px 'Open Sans Condensed',sans-serif;
+  text-align:center;
+  letter-spacing:-3px;
+}
+.position{
+  display: inline-block;
+  height: .6em;
+  overflow: hidden;
+  position: relative;
+  width: .5em;
+  bottom:0;
+  left:0;
+}
+.digit{
+  position:absolute;
+  display:block;
+  width:1em;
+  background-color:#444;
+  border-radius:0.2em;
+  text-align:center;
+  color:#fff;
+  letter-spacing:-1px;
+}
+.digit.static{
+  box-shadow:1px 1px 1px rgba(5, 4, 4, 0.35);
+  background-image: linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+  background-image: -o-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+  background-image: -moz-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+  background-image: -webkit-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+  background-image: -ms-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.5, #3A3A3A),
+    color-stop(0.5, #444444)
+  );
+}
+/**
+ * You can use these classes to hide parts
+ * of the countdown that you don't need.
+ */
+.countDays{  display:none !important; }
+.countDiv0{  display:none !important; }
+.countHours{}
+.countDiv1{}
+.countMinutes{}
+.countDiv2{}
+.countSeconds{}
+.countDiv{
+  display:inline-block;
+  width:16px;
+  height:1.6em;
+  position:relative;
+}
+.countDiv:before,
+.countDiv:after{
+  position:absolute;
+  width:5px;
+  height:5px;
+  background-color:#fff;
+  border-radius:50%;
+  left:50%;
+  margin-left:-3px;
+  top:0.5em;
+  box-shadow:1px 1px 1px rgba(4, 4, 4, 0.5);
+  content:'';
+}
+.countDiv:after{
+  top:0.9em;
+}
+a {
+    border: 4px solid #FFFFFF;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 24px;
+    padding: 12px 32px 12px 82px;
+    position: absolute;
+  right:10px;
+  bottom:15px;
+    text-decoration: none;
+}
+a .label,
+a .icon-arrow {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    perspective: 1000;
+}
+a .label {
+    display: inline-block;
+    transition: transform .5s cubic-bezier(0.86, 0, 0.07, 1);
+}
+a .icon-arrow {
+    fill: #fff;
+    height: 15px;
+    top: 17px;
+    transition: transform .5s cubic-bezier(0.86, 0, 0.07, 1), opacity .4s cubic-bezier(0.86, 0, 0.07, 1);
+    width: 35px;
+}
+a .icon-arrow.before {
+    left: 32px;
+    margin-right: 15px;
+    position: absolute;
+    transform-origin: left center;
+}
+a .icon-arrow.after {
+    margin-left: 15px;
+    opacity: 0;
+    position: absolute;
+    right: 32px;
+    transform: translateX(75%) scaleX(0.1);
+    transform-origin: right center;
+}
+a:hover .label {
+    transform: translateX(-52px);
+}
+a:hover .icon-arrow.before {
+    opacity: 0;
+    transform: translateX(-75%) scaleX(0.1);
+}
+a:hover .icon-arrow.after {
+    opacity: 1;
+    transform: translateX(0) scaleX(1);
+}
+a:active {
+    border-color: #FD6154;
+    color: #FD6154;
+}
+a:active .icon-arrow {
+    fill: #FD6154;
+}
+</style>
 </head>
-<body>
+<body style="background-image:url(static/apogeeb.jpg)">
 <div id="countdown"></div>
-<h1 style="color:#fff; text-align:center; font-size:60px;z-index:25;">DEAL WITH DESTRUCTIONS</h1>
+<h1 style="color:#fff; text-align:center; font-size:60px;z-index:25;">DEAL WITH DISTRACTIONS</h1>
 <canvas id="canvas">
-
+console.log()
 </canvas>
 
-
-<a href="http://www.google.com">
-    <svg class="icon-arrow before">
-        <use xlink:href="#arrow"></use>
-    </svg>
-    <span class="label">Let's Go</span>
-    <svg class="icon-arrow after">
-        <use xlink:href="#arrow"></use>
-    </svg>
-</a>
-
-<svg style="display: none;">
-  <defs>
-    <symbol id="arrow" viewBox="0 0 35 15">
-      <title>Arrow</title>
-      <path d="M27.172 5L25 2.828 27.828 0 34.9 7.071l-7.07 7.071L25 11.314 27.314 9H0V5h27.172z "/>
-    </symbol>
-  </defs>
-</svg>
+<div class="container">
+<!--<p id = "demo"></p>
+<button type="button" onclick="myfunction()">Click Me!</button>
+  <h2>2048</h2>-->
+     <span id="user-username">{{ request.user.username }}</span>
+     <div>SCORE:</div>
+     <span id = "scoredisp">0</span>
 
 
 
+<!-- Trigger/Open The Modal -->
+<button id="myBtn">Open Modal</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p id = "check">Hello</p>
+    <p>Answer: <input type="text" id="myText" value="None"></p>
+
+    <button id = "bt" onclick = "sendans()">Submit</button>
+    <button id = "skip" onclick = "skipped()">Skip</button>
+
+  </div>
+
+</div>
+<div id="dialog" style="display: none">
+Checking answer
+</div>
+  <div ng-app="GameApp" ng-controller="GameCtrl" >
+    <div class="row">
+      <div class="col-md-offset-8 col-md-2">
+        <!-- <button ng-click="renew()" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon glyphicon-repeat" aria-hidden="true"></span>
+         New</button> -->
+       </div>
+    </div>
+    <br/>
+    <div id="board" class="board" ng-keyup="key($event)" tabindex="1">
+      <div class="box" ng-class="getClass(0)">
+        <input ng-value="print(0)" disabled class="capture">
+      </div>
+      <div class="box" ng-class="getClass(1)">
+        <input ng-value="print(1)" disabled class="capture">
+      </div>
+      <div class="box" ng-class="getClass(2)">
+        <input ng-value="print(2)" disabled class="capture">
+      </div>
+      <div class="box edge" ng-class="getClass(3)">
+        <input ng-value="print(3)" disabled class="capture">
+      </div>
+      <div class="box" ng-class="getClass(4)">
+        <input ng-value="print(4)" disabled class="capture">
+      </div>
+      <div class="box" ng-class="getClass(5)">
+        <input ng-value="print(5)" disabled class="capture">
+      </div>
+      <div class="box" ng-class="getClass(6)">
+        <input ng-value="print(6)" disabled class="capture">
+      </div>
+      <div class="box edge" ng-class="getClass(7)">
+        <input ng-value="print(7)" disabled class="capture">
+      </div>
+      <div class="box" ng-class="getClass(8)">
+        <input ng-value="print(8)" disabled class="capture">
+      </div>
+      <div class="box" ng-class="getClass(9)">
+        <input ng-value="print(9)" disabled class="capture">
+      </div>
+      <div class="box" ng-class="getClass(10)">
+        <input ng-value="print(10)" disabled class="capture">
+      </div>
+      <div class="box edge" ng-class="getClass(11)">
+        <input ng-value="print(11)" disabled class="capture">
+      </div>
+      <div class="box last" ng-class="getClass(12)">
+        <input ng-value="print(12)" disabled class="capture">
+      </div>
+      <div class="box last" ng-class="getClass(13)">
+        <input ng-value="print(13)" disabled class="capture">
+      </div>
+      <div class="box last" ng-class="getClass(14)">
+        <input ng-value="print(14)" disabled class="capture">
+      </div>
+      <div class="box edge last" ng-class="getClass(15)">
+        <input ng-value="print(15)" disabled class="capture">
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<script src="//code.angularjs.org/1.5.8/angular-resource.min.js"></script>
+<script src="{% static 'hammer.min.js'%}"></script>
 <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-		<script src="jquery.countup.js"></script>
-		<script src="apogee.js" type="text/javascript"></script>
+
+<script>
+  var yes = 1;
+   function display(str){
+   document.getElementById('check').innerHTML =str;
+   modal.style.display = "block";
+   console.log(str);
+   console.log("done");
+   }
+   const getAns = () => {
+  console.log(document.getElementById('myText').value);
+  return document.getElementById('myText').value;
+};
+const makeRequest = (url,data,method) =>{
+  var csrf_token = document.cookie.split('=')[1];
+  console.log(data);
+  let request = new XMLHttpRequest();
+  request.open(method,url,true);
+  request.setRequestHeader("Content-type","application/json");
+  request.setRequestHeader("X-CSRFToken",csrf_token);
+  request.onreadystatechange = () => {
+    if(request.readyState === 4 && request.status === 200){
+      //suuccessfully recieved response
+      let dataRetrieved = JSON.parse(request.responseText);
+      console.log(dataRetrieved);
+      if(dataRetrieved['is_correct'] == true){
+        result = "Congratulation, your answer is correct";
+      }
+      else{ result = "Oops !! Your answer is wrong";}
+      document.getElementById("dialog").innerHTML = result;
+    //  document.getElementById('scoredisp').innerHTML = dataRetrieved['score'];
+      // yes = dataRetrieved['board_state'];
+      yes =1;
+    }
+    else if(request.readyState === 4 && request.status !== 200){
+      console.log('Error in fetching data...');
+    }
+  };
+  request.send(JSON.stringify(data));
+};
+const sendans = () => {
+let ans = getAns();
+let obj = {'answer':ans, 'board_state': 2, 'user_': document.getElementById('user-username').innerHTML };
+//modal-content.style.display = "none";
+modal.style.display = "none";
+let url = '/do/';
+makeRequest(url,obj,"POST");
+};
+const skipped = () => {
+let ans = " ";
+let obj = {'answer':ans, 'board_state': 2, 'user_': document.getElementById('user-username').innerHTML };
+modal.style.display = "none";
+let url = '/do/';
+makeRequest(url,obj,"POST");
+};
+   // Get the modal
+  var modal = document.getElementById('myModal');
+  // Get the button that opens the modal
+  var btn = document.getElementById("myBtn");
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+  // When the user clicks the button, open the modal
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+  // When the user clicks anywhere outside of the modal, close it
+  // window.onclick = function(event) {
+  //   if (event.target == modal) {
+  //     modal.style.display = "none";
+  //   }
+  // }
+   function myfunction(){document.getElementById('demo').innerHTML = "DONE";}
+  var app = angular.module('GameApp', ["ngResource"]);
+  app.factory('Game', ['$resource',
+      function($resource) {
+        return $resource('/do', {}, {
+          renew: {
+            method: 'GET',
+            isArray: true
+          },
+      process: {
+            method: 'POST'
+          }
+        });
+      }
+  ]);
+  app.config(['$httpProvider',function($httpProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+  }]);
+  app.controller("GameCtrl",function($scope,Game){
+    $scope.board = [];
+    var UP=0;
+    var DOWN=1;
+    var LEFT=2;
+    var RIGHT=3;
+    var GAME_OVER=false;
+    for(var i = 0;i<16;i++){
+      $scope.board[i] = 0;
+    }
+    var hammertime = new Hammer(document.body);
+    hammertime.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+    hammertime.on('swipeleft', function(ev) {
+      $scope.process(LEFT);
+    });
+    hammertime.on('swiperight', function(ev) {
+      $scope.process(RIGHT);
+    });
+    hammertime.on('swipeup', function(ev) {
+      $scope.process(UP);
+    });
+    hammertime.on('swipedown', function(ev) {
+      $scope.process(DOWN);
+    });
+    $scope.key =function(event) {
+      console.log(event.keyCode);
+      var direction=-1;
+      switch(event.keyCode){
+        case 38:
+          direction = UP;
+          break;
+        case 40:
+          direction =DOWN;
+          break;
+        case 37:
+          direction = LEFT;
+          break;
+        case 39:
+          direction = RIGHT;
+          break;
+      }
+      if(direction != -1) {
+        $scope.process(direction);
+      }
+    }
+    $scope.process = function(direction){
+      if(GAME_OVER){
+        alert("Game over");
+        return;
+      }
+      Game.process({
+        board:$scope.board,
+        direction: direction,
+        board_state: yes
+      }).$promise.then(showBoard);
+    }
+    var showBoard = function(response) {
+        document.getElementById("dialog").innerHTML = "Checking answer";
+      console.log(response);
+      console.log("start");
+      //console.log(response.revealQues_dict.curr_ques_Ques);
+      //display(response.revealQues_dict.curr_ques_Ques);
+      console.log("end");
+      if(!response.continue) {
+        console.log("FINISH");
+        alert("Game over");
+        GAME_OVER=true;
+       }else{
+        if(response.board_state == 2){
+          yes = 3;
+          display(response.curr_ques_Ques);
+        }
+        else if(response.board_state == 1){$scope.board = response.board;
+          $scope.score = response.score;
+          yes = 1;}
+      }
+      console.log("yyyyyayyyy");
+      //console.log(response.board[0]);
+      console.log($scope.score);
+    document.getElementById('scoredisp').innerHTML = 0;
+    }
+    $scope.renew = function() {
+      $scope.board = Game.renew();
+      GAME_OVER=false;
+      document.getElementById('board').focus();
+    }
+    $scope.print = function(n){
+      var bh;
+        var arr = ["A","B","C","D","E","F","G","H","I","J","K","L","M"];
+        if($scope.board[n] == 4096){alert("GAME END");
+             window.location = "/";}
+        bh = arr[Math.log2($scope.board[n])];
+        document.getElementById('scoredisp').innerHTML = $scope.score;
+           return $scope.board[n]==0?"":bh;
+         //document.getElementById('scoredisp').innerHTML = $scope.score;
+    }
+    //
+    $scope.getClass = function(n) {
+      return $scope.board[n]==0?"":"box-"+$scope.board[n];
+    }
+    $scope.renew();
+  });
+  alert
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
+<link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+    rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(function () {
+        $("#bt").click(function () {
+            $("#dialog").dialog({
+                modal: true,
+                title: "Result",
+               width: 300,
+                height: 150,
+                open: function (event, ui) {
+                    setTimeout(function () {
+                        $("#dialog").dialog("close");
+                    }, 3000);
+                }
+            });
+        });
+    });
+</script>
+  <script type="text/javascript">
+    "use strict";
+    var canvas = document.getElementById('canvas'),
+      ctx = canvas.getContext('2d'),
+      w = canvas.width = window.innerWidth,
+      h = canvas.height = window.innerHeight,
+      hue = 217,
+      stars = [],
+      count = 0,
+      maxStars = 2000;
+    var canvas2 = document.createElement('canvas'),
+        ctx2 = canvas2.getContext('2d');
+        canvas2.width = 100;
+        canvas2.height = 100;
+    var half = canvas2.width/2,
+        gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);
+        gradient2.addColorStop(0.025, '#fff');
+        gradient2.addColorStop(0.1, 'hsl(' + hue + ', 61%, 33%)');
+        gradient2.addColorStop(0.25, 'hsl(' + hue + ', 64%, 6%)');
+        gradient2.addColorStop(1, 'transparent');
+        ctx2.fillStyle = gradient2;
+        ctx2.beginPath();
+        ctx2.arc(half, half, half, 0, Math.PI * 2);
+        ctx2.fill();
+    // End cache
+    function random(min, max) {
+      if (arguments.length < 2) {
+        max = min;
+        min = 0;
+      }
+      if (min > max) {
+        var hold = max;
+        max = min;
+        min = hold;
+      }
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    function maxOrbit(x,y) {
+      var max = Math.max(x,y),
+          diameter = Math.round(Math.sqrt(max*max + max*max));
+      return diameter/2;
+    }
+    var Star = function() {
+      this.orbitRadius = random(maxOrbit(w,h));
+      this.radius = random(60, this.orbitRadius) / 12;
+      this.orbitX = w / 2;
+      this.orbitY = h / 2;
+      this.timePassed = random(0, maxStars);
+      this.speed = random(this.orbitRadius) / 50000;
+      this.alpha = random(2, 10) / 10;
+      count++;
+      stars[count] = this;
+    }
+    Star.prototype.draw = function() {
+      var x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX,
+          y = Math.cos(this.timePassed) * this.orbitRadius + this.orbitY,
+          twinkle = random(10);
+      if (twinkle === 1 && this.alpha > 0) {
+        this.alpha -= 0.05;
+      } else if (twinkle === 2 && this.alpha < 1) {
+        this.alpha += 0.05;
+      }
+      ctx.globalAlpha = this.alpha;
+        ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);
+      this.timePassed += this.speed;
+    }
+    for (var i = 0; i < maxStars; i++) {
+      new Star();
+    }
+    function animation() {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.globalAlpha = 0.8;
+        ctx.fillStyle = 'hsla(' + hue + ', 64%, 6%, 1)';
+        ctx.fillRect(0, 0, w, h)
+      ctx.globalCompositeOperation = 'lighter';
+      for (var i = 1, l = stars.length; i < l; i++) {
+        stars[i].draw();
+      };
+      window.requestAnimationFrame(animation);
+    }
+    animation();
+    $(function(){
+      $('#countdown').countup();
+    });
+  </script>
 </body>
 </html>
+{% endblock %}
 
-    

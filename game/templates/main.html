@@ -1,10 +1,11 @@
 
 <html>
+{% load staticfiles %}
 <head>
-  <link href="main.css" rel="stylesheet" type="text/css">
+  <link href="{% static 'main.css'%}" rel="stylesheet" type="text/css">
   </head>
   <body>
-    <img src="apogee.png" class="right">
+    <img src="{% static 'apogee.png'%}" class="right">
     <svg viewBox="0 0 800 300">
   <symbol id="s-text">
     <text text-anchor="middle"
@@ -32,8 +33,9 @@
 
 
 </svg>
-<button class="button">Click to Continue</button>
-</body>
+
+<button class="btn" onclick='window.location = "/accounts/google/login/?process=login"'>Click to Continue</button>
+
 </html>
 
-    
+  

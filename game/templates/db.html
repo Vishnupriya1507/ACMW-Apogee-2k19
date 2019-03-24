@@ -102,18 +102,20 @@
     text-align: center;
     font-size: 20px;
 }
-
+#myBtn{
+display:none;
+}
 </style>
 <div class="container">
 <p id = "demo"></p>
-<button type="button" onclick="myfunction()">Click Me!</button>
+<!--<button type="button" onclick="myfunction()">Click Me!</button> -->
 
-	<h2>2048</h2>
+	
      <span id="user-username">{{ request.user.username }}</span>
      <div>SCORE:</div>
      <span id = "scoredisp"></span>
 
-    <h2>Modal Example</h2>
+   
 
 <!-- Trigger/Open The Modal -->
 <button id="myBtn">Open Modal</button>
@@ -413,7 +415,7 @@ makeRequest(url,obj,"POST");
         $("#bt").click(function () {
             $("#dialog").dialog({
                 modal: true,
-                title: "jQuery Dialog",
+                title: " ",
                width: 300,
                 height: 150,
                 open: function (event, ui) {

@@ -24,6 +24,8 @@ import game.views
 
 urlpatterns = [
     url(r'^$',views.main, name='main'),
+    url(r'^storyline/$',views.storyline,name='storyline'),
+    url(r'^storyline/instructions/$',views.instructions,name='instructions'),
     url(r'^login/$',views.login, name='login'),
     url(r'^apogee/$', game.views.apogee, name='apogee'),
     url(r'^acads/$', game.views.Acads, name='Acads'),

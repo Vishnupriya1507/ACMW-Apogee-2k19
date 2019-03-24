@@ -7,6 +7,14 @@ from django.contrib.auth.decorators import login_required
 def main(request):
 	return render(request, 'mainpage.html',)
 
+@login_required(login_url='/login/')
+def storyline(request):
+	return render(request,'story.html')
+
+@login_required(login_url='/login/')
+def instructions(request):
+	return render(request,'instructions.html.html')
+	
 def login(request):
-	return render(request,'signup.html',)
+	return render(request,'main.html',)
 

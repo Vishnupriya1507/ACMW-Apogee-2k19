@@ -1,3 +1,4 @@
+
 var w = c.width = window.innerWidth,
     h = c.height = window.innerHeight,
     ctx = c.getContext( '2d' ),
@@ -18,7 +19,7 @@ var w = c.width = window.innerWidth,
       [ 0, 1 ],
       [ 1, 0 ],
       [ 0, -1 ],
-    	[ -1, 0 ],
+      [ -1, 0 ],
    // diagonals, 0.7 = sin(PI/4) = cos(PI/4)
       [ .7, .7 ],
       [ .7, -.7 ],
@@ -50,7 +51,7 @@ function init() {
 function getColor( x ) {
   
   return 'hsl( hue, 80%, 50% )'.replace(
-  	'hue', x / w * 360 + frame
+    'hue', x / w * 360 + frame
   );
 }
 function anim() {
@@ -164,3 +165,5 @@ window.addEventListener( 'resize', function() {
   
   init();
 } )
+
+
