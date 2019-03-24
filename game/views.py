@@ -79,7 +79,7 @@ def Acads(request):
 
     games = Game.objects.all()
 
-    return render(request, 'db.html', {'games': games})
+    return render(request, 'acads.html', {'games': games})
 
 
 @login_required(login_url='/login/')
