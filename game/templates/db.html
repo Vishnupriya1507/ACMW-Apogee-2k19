@@ -24,7 +24,6 @@
 	  border: 1px solid #888;
 	  width: 80%;
 	}
-
 	/* The Close Button */
 	.close {
 	  color: #aaaaaa;
@@ -110,12 +109,12 @@ display:none;
 <p id = "demo"></p>
 <!--<button type="button" onclick="myfunction()">Click Me!</button> -->
 
-	
+
      <span id="user-username">{{ request.user.username }}</span>
      <div>SCORE:</div>
      <span id = "scoredisp"></span>
 
-   
+
 
 <!-- Trigger/Open The Modal -->
 <button id="myBtn">Open Modal</button>
@@ -125,9 +124,10 @@ display:none;
 
   <!-- Modal content -->
   <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>First Name: <input type="text" id="myText" value="Mickey"></p>
-		<p id = "check">Hello</p>
+
+	 <p id = "check">Question</p>
+	  <p>Answer: <input type="text" id="myText" value="None"></p>
+
 		<button id = "bt" onclick = "sendans()">Submit</button>
 		<button id = "skip" onclick = "skipped()">Skip</button>
 
@@ -204,7 +204,6 @@ Checking answer
 <script src="{% static 'hammer.min.js'%}"></script>
 
 <script>
-
 	var yes = 1;
    function display(str){
    document.getElementById('check').innerHTML =str;
@@ -216,7 +215,6 @@ Checking answer
 	console.log(document.getElementById('myText').value);
 	return document.getElementById('myText').value;
 };
-
 const makeRequest = (url,data,method) =>{
 	var csrf_token = document.cookie.split('=')[1];
   console.log(data);
@@ -229,15 +227,12 @@ const makeRequest = (url,data,method) =>{
 			//suuccessfully recieved response
 			let dataRetrieved = JSON.parse(request.responseText);
 			console.log(dataRetrieved);
-
-
 			if(dataRetrieved['is_correct'] == true){
 				result = "Congratulation, your answer is correct";
 			}
 			else{ result = "Oops !! Your answer is wrong";}
 			document.getElementById("dialog").innerHTML = result;
 		//	document.getElementById('scoredisp').innerHTML = dataRetrieved['score'];
-
 			// yes = dataRetrieved['board_state'];
 			yes =1;
 		}
@@ -250,7 +245,6 @@ const makeRequest = (url,data,method) =>{
 const sendans = () => {
 let ans = getAns();
 let obj = {'answer':ans, 'board_state': 2, 'user_': document.getElementById('user-username').innerHTML };
-
 //modal-content.style.display = "none";
 modal.style.display = "none";
 let url = '/do/';
@@ -273,16 +267,7 @@ makeRequest(url,obj,"POST");
 	btn.onclick = function() {
 	  modal.style.display = "block";
 	}
-	// When the user clicks on <span> (x), close the modal
-	span.onclick = function() {
-	  modal.style.display = "none";
-	}
-	// When the user clicks anywhere outside of the modal, close it
-	window.onclick = function(event) {
-	  if (event.target == modal) {
-	    modal.style.display = "none";
-	  }
-	}
+
    function myfunction(){document.getElementById('demo').innerHTML = "DONE";}
 	var app = angular.module('GameApp', ["ngResource"]);
 	app.factory('Game', ['$resource',
