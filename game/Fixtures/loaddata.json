@@ -1,0 +1,243 @@
+[  {
+	"model": "game.Question",
+		"pk": 2,
+		"fields": {
+			"questionno": "2",
+			"solution": "S",
+			"question": "6 friends P, Q, R, S, T and U are sitting around the hexagonal table each at one corner and are facing the centre of the hexagonal table.P is second to left of U.Q is neighbour of R and S.T is second to left of S. Which one is sitting opposite to P."
+			
+		}
+	},
+
+
+	{
+		"model": "game.Question",
+		"pk": 3,
+		"fields": {
+			"questionno": "3",
+			"solution": "52",
+			"question": "20:11::102:x. What is x?"
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 4,
+		"fields": {
+			"questionno": "4",
+			"solution": "Wednesday",
+			"question": "What day comes four days after the day which comes two days after the day which comes immediately after the day which comes two days after Monday?"
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 5,
+		"fields": {
+			"questionno": "5",
+			"solution": "40",
+			"question": "A man has 53 socks in his drawer: 21 identical blue, 15 identical black and 17 identical red. The lights are fused and he is completely in the dark. How many socks must he take out to make 100 percent certain he has a pair of black socks?"
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 6,
+		"fields": {
+			"questionno": "6",
+			"solution": "4,9",
+			"question": "Fill in the blanks of this number 8, 5_ , _1, 67,320"
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 7,
+		"fields": {
+			"questionno": "7",
+			"solution": "7",
+			"question": "Let A, B and C contain 0,0 and 27 balls respectively. On ith transfer, 'i' balls are transferred to or from C to either B or A. If no balls can be transferred between A and B, after how many transfers will all three have same number of balls?"
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 8,
+		"fields": {
+			"questionno": "8",
+			"solution": "6",
+			"question": "How many operators (+, -,×,÷,%, square foot, !, etc) are required to give 6 from 3 zeros?"
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 9,
+		"fields": {
+			"questionno": "9",
+			"solution": "9",
+			"question": "If ABCDE×4= EDCBA, what is the value of C?"
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 10,
+		"fields": {
+			"questionno": "10",
+			"solution": "9",
+			"question": "In a village there is a custom where if a wife catches her husband cheating, she shoots him on the same night. Each woman knows about every unfaithful husband except her own and they would never tell each other this. A third party announces in the village that there are some unfaithful husbands. How many of them were there if all unfaithful husbands are shot by the 9th midnight?"
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 11,
+		"fields": {
+			"questionno": "11",
+			"solution": "9",
+			"question": "If D R I N K+ D R I V E= W R E C K , each letter representing a different digit and the word as a whole representing a 4 digit number made up of the digits, what should be the value of R?"
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 12,
+		"fields": {
+			"questionno": "12",
+			"solution": "7",
+			"question": "Using +, -, *, /, square root or exponent, make 29 out of digits 1, 9 , 9 and 6 and give the number of such operands (besides the equal-to symbol) used in the processes?"
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 13,
+		"fields": {
+			"questionno": "13",
+			"solution": "73",
+			"question": "100 people are standing in a circle in an order 1 to 100. No. 1 has a sword. He kills next person(i.e. no. 2) and gives the sword to next to next(i.e. no. 3).All person do the same until only one survives. Which number survives at the last?"
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 14,
+		"fields": {
+			"questionno": "14",
+			"solution": "7",
+			"question": "There are 25 horses. In one race maximum 5 horses can run. How many such races are required in minimum to find the fastest three horses?"
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 15,
+		"fields": {
+			"questionno": "15",
+			"solution": "0",
+			"question": "Three friends Pablo, Edvard and Henri are talking to each other about the art collection of Leonardo.Pablo says:Leonardo has at least 4 paintings of Rembrandt. Edvard says: No he has less than four paintings of Rembrandt. According Henri, Leonardo has at least one Rembrandt"
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 16,
+		"fields": {
+			"questionno": "16",
+			"solution": "No",
+			"question": "A man accused of a crime, hired an attorney whose statements were always admitted by court as undisputable truth. The following exchange took place in the court.Prosecutor said if the accused committed the crime, he had an accomplice.Defender said that it was not true. Did the attorney helped his client?"
+		
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 17,
+		"fields": {
+			"questionno": "17",
+			"solution": "7342105869",
+			"question": " You wake up in a locked cell, a bit shaken up but with all faculties intact. When you get to the cell-door you see a Number Pad with an attached note that has the following instructions... 'I am Professor Mad Math. I have imprisoned you! The only way to escape is to punch in the correct Code into the Number Pad. The  digit Code is made up of digits  inclusive, each digit used exactly once. These are the clues to crack my Code---<br>1. The sum of the middle two digits is a Square Number.<br>2. The sum of the middle four digits is a Cube number<br>3. The net difference between the first and tenth digit is <br>4. The net difference between the second and ninth digit is <br>5. The net difference between the third and eighth digit is <br>6. The sum of the first five digits is a Prime number<br>7. The sum of the last five digits is a Triangular number<br>8. The sum of the digits in odd positions (first, third, fifth, seventh and ninth digits) is an Odd number.<br>9. The digit  is somewhere in the first five positions.<br>I believe I have given you more than adequate information. Can you crack the Code? <br>Give your answer as the complete code.'"
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 18,
+		"fields": {
+			"questionno": "18",
+			"solution": "2",
+			"question": "A Businessman advertised two job openings for peons in his firm. Two men applied and the businessman decided to engage both of them. He offered them salary of 2000 rupees per year. 1000 rupees to be paid every half year,with a promise that their salary would be raised if their work proved satisfactory.They could have a raise of 300 rupees per year ,(or) if they preferred,100 rupees each half year .The two men thought for few moments and then one of them expressed his wish to take the raise at 300 rupees per year ,while the other man said he would accept the half yearly increase of 100 rupees .between the two men,who was gainer . "
+		
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 19,
+		"fields": {
+			"questionno": "19",
+			"solution": "27-594-16038",
+			"question": "A mathematical professor set his lock number, he used mathematics so he would remember the ten digit code. He used all of the numbers from 0-9, every number only once. In his mind the first two numbers of the code became a two-digit-number (XX). If you multiply this number (by some integer) you get a three-digit-number (YYY), which is third, 4th and 5th number of the code. And lastly, if you multiply the first (two-digit-number) with a second (three-digit-number) you get the regame.ng five numbers of the code (five-digit-number). "
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 20,
+		"fields": {
+			"questionno": "20",
+			"solution": "0",
+			"question": "You can make a bid on a widget whose value to the owner, as far as you know, is uniformly randomly distributed between 0 and 100 dollars.However its value to you is 80% greater than its value to the owner.If you offer the same or more than the widget is worth to the owner S/he will sell.How much should you bid? "
+			
+		}
+	},
+	{
+		"model": "game.Question",
+		"pk": 21,
+		"fields": {
+			"questionno": "21",
+			"solution": "8",
+			"question": "48 people are seated in a big circular table, where they find between each pair of settings, there is one napkin. As each person is seated, he chooses one napkin from his left, or right. If both are present, he choose it randomly. The question is, if the maitre d' seats each guest and try to make the number of napkinless guests as many as possible, what is the expected number? "
+			
+		}
+	},
+{
+		"model": "game.Question",
+		"pk": 22,
+		"fields": {
+			"questionno": "22",
+			"solution": "No one",
+			"question": "This puzzle is taken from Mathematical Puzzles: A Connoisseur's Collection [Peter Winkler]. I don't understand the solution. Alice, Bob, and Carol arrange a three-way duel. Alice is a poor shot, hitting her target only 1/3 of the time on average. Bob is better, hitting his target 2/3 of the time. Carol is a sure shot. They take turns shooting, first Alice, then Bob, the Carol, then back to Alice, and so on until one is left. What is Alice's best course of action? Whom will she kill? "
+			
+		}
+	},
+{
+		"model": "game.Question",
+		"pk": 23,
+		"fields": {
+			"questionno": "23",
+			"solution": "63",
+			"question": "A man possesses a large quantity of stamps of only two denominations: 5-cent stamps and 17-cent stamps. What is the largest (finite) amount of cents which the man cannot make up with a combination of these stamps?"
+			
+		}
+	},
+{
+		"model": "game.Question",
+		"pk": 24,
+		"fields": {
+			"questionno": "24",
+			"solution": "No",
+			"question": "Rand and Rubio are playing a game in which they each take turns to pick a digit between 1 and 9, without replacement (i.e. all digits chosen are distinct). If one of them manages to get three digits which sum to 15, then he wins. If neither player achieves this, they both lose.Rand goes first. Does he have a winning strategy? "
+			
+		}
+	},
+{
+		"model": "game.Question",
+		"pk": 25,
+		"fields": {
+			"questionno": "25",
+			"solution": "c",
+			"question": "Two identical bolts are placed together so their grooves intermesh. If you move the bolts around each other as you would twiddle your thumbs, holding each bolt firmly by the head so it does not rotate and twiddling them in the direction shown below, will the heads(a) move inward,(b) move outward, or (c) regame.the same distance from each other?  "
+			
+		}
+	}
+]

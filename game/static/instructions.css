@@ -1,0 +1,109 @@
+
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif');
+@import url('https://fonts.googleapis.com/css?family=Righteous');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+
+
+canvas {
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  z-index:-1;
+
+}
+.text-box {
+   font-family: 'Josefin Sans';
+   text-align: justify;
+   font-size: 20px;
+   margin: auto;
+   padding: 10px;
+   background-color: #fff;
+   width: 500px;
+   min-height: 300px;
+   border-radius: 10px;
+   z-index:2;
+   opacity:0.9 ;
+}
+h1{
+color:#fff;
+ text-align:center;
+ font-size:60px;
+ font-family: Bree Serif;
+ }
+ h2{
+ color:#fff;
+ text-align:center;
+ font-size:40px;
+ font-family: Righteous;
+ }
+
+#b{
+font-size: 15px;
+color: white;
+background: white;
+
+border-color: black;
+border-width: thick;
+width: 30%;
+height: 40px;
+border-radius: 2px;
+-webkit-animation:colorchange 20s infinite alternate;
+}
+
+    @-webkit-keyframes colorchange {
+      0% {
+
+        color: blue;
+      }
+
+      10% {
+
+        color: #8e44ad;
+      }
+
+      20% {
+
+        color: #1abc9c;
+      }
+
+      30% {
+
+        color: #d35400;
+      }
+
+      40% {
+
+        color: blue;
+      }
+
+      50% {
+
+        color: #34495e;
+      }
+
+      60% {
+
+        color: blue;
+      }
+
+      70% {
+
+        color: #2980b9;
+      }
+      80% {
+
+        color: #f1c40f;
+      }
+
+      90% {
+
+        color: #2980b9;
+      }
+
+      100% {
+
+        color: pink;
+      }
+    }

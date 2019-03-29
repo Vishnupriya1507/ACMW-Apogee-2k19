@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+    <head>
+      <title>Instructions
+</title>
+        <meta name="description" content=""/>
+        <meta name="keywords" content=""/>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <!-- Bootstrap CSS -->
+        <link href="{% static 'instructions.css' %}" rel="stylesheet" type="text/css">
+
+    </head>
+    <body>
+  <h1>Deal With Distractions</h1>
+  <h2>Instructions</h2>
+  <div class="wrapper">
+   <div class=" jumbotron text-box center-block">
+      <p class="quote text-center">
+        1.) Upon entering the game 6 faces of cube are shown with different labels. Player can click on any of the 6.<br>
+<br>2.) Click on the face of cube before starting to play.<br>
+<br>3.) Use arrow keys to combine the similar strings to progress in the game.<br>
+<br>4.) Player can go back at any point of time and select any other face to continue the game.<br><br>
+5.) Player can view instruction page at any point of time by clicking on "Instructions" button.<br>
+
+
+
+      </p>
+      <a href = "/" id = "b"><b>READY TO PLAY</b></a>
+
+   </div>
+
+</div>
+
+  <canvas id=c></canvas>
+
+<script src="{% static 'instructions.js' %}"></script>
+    </body>
+</html>

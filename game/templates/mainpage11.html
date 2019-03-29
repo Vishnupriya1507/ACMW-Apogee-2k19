@@ -1,0 +1,116 @@
+
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+<style>
+body {height: 100vh; text-align: center; margin: 2% 15%; background-image: url('static/b.jpg');}
+h1{color: #FFFFFF; font-family: bronto; font-size: 50px;}
+.container {height: 100%; margin-top: 200px;}
+.dice {position: relative; margin: 0 auto; height: 300px; width: 300px; transform-style: preserve-3d; animation: spin 11s infinite alternate;}
+@keyframes spin {0%{transform: rotateX(400deg) rotateY(400deg) translateZ(0px);}}
+.side {position: absolute; height: 300px; width: 300px; opacity: .7; background: white; vertical-align: top;}
+.one{transform: rotateX(90deg) translateZ(200px); background: #F44336;}
+.two{transform: translateZ(200px); background: #D50000;}
+.three{transform: rotateY(90deg) translateZ(200px); background: #FF3D00;}
+.four{transform: rotateY(180deg) translateZ(200px); background: #A1887F;}
+.five{transform: rotateY(-90deg) translateZ(200px); background: #757575;}
+.six{transform: rotateX(-90deg) translateZ(200px); background: #000000;}
+.container:hover .dice{animation: none; width: auto;}
+.container:hover .dice > .side{position: relative; transform: none; display: inline-block; transition: all 1s; opacity: 1; margin: 1%;}
+.dice > div{position: absolute; height: 400px; width: 400px; transition: all 1s; opacity: .7;}
+.container .dice > .side:hover{transform: scale(1.1);}
+a{text-decoration: none; height: 100%; color: #000001; vertical-align: middle;}
+a:hover{background: purple; color: white;}
+</style>
+
+</head>
+<body>
+<nav class="navbar navbar-default navbar-static-top navbar-inverse">
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <li class="active">
+        <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
+      </li>
+
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+
+    </ul>
+  </div>
+</nav>
+<h1> Deal with Distraction</h1>
+<div class="container">
+  <div class="dice">
+    <div class="side one"><a href='acads/' onclick="face1()">ACADS</a></div>
+        <div class="side two"><a href='cda/' onclick="face2()">CDA</a></div>
+        <div class="side three"><a href='placements/' onclick="face3()">PLACEMENTS AND PS</a></div>
+        <div class="side four"><a href='bosm/' onclick="face4()">BOSM</a></div>
+        <div class="side five"><a href='apogee/' onclick="face5()">APOGEE</a></div>
+        <div class="side six"><a href='oasis/'onclick="face6()">OASIS</a></div>
+  </div>
+</div>
+</body>
+</html>
+
+
+<script>
+var face;
+var url = "do/";
+const face1 = () => {
+   console.log('face1');
+   let face = 0;
+   let faceobj = {'faceselected':face};
+   makeRequest(url,faceobj,"GET");
+}
+
+const face2 = () => {
+   let face = 1;
+   let faceobj = {'faceselected':face};
+   makeRequest(url,faceobj,"GET");
+}
+
+const face3 = () => {
+   let face = 2;
+   let faceobj = {'faceselected':face};
+   makeRequest(url,faceobj,"GET");
+}
+
+const face4 = () => {
+   let face = 3;
+   let faceobj = {'faceselected':face};
+   makeRequest(url,faceobj,"GET");
+}
+
+const face5 = () => {
+   let face = 4;
+   let faceobj = {'faceselected':face};
+   makeRequest(url,faceobj,"GET");
+}
+
+const face6 = () => {
+   let face = 5;
+   let faceobj = {'faceselected':face};
+   makeRequest(url,faceobj,"GET");
+}
+
+
+const makeRequest = (url,data,method) =>{
+  console.log(data);
+  let request = new XMLHttpRequest();
+  request.open(method,url,true);
+  request.setRequestHeader("Content-type","application/json");
+  request.onreadystatechange = () => {
+    if(request.readyState === 4 && request.status === 200){
+      //suuccessfully recieved response
+      let dataRetrieved = JSON.parse(request.responseText);
+      processData(dataRetrieved);
+    }
+    else if(request.readyState === 4 && request.status !== 200){
+      console.log('Error in fetching data...');
+    }
+  };
+  request.send(JSON.stringify(data));
+};
+
+</script>

@@ -1,0 +1,179 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
+
+body{
+  margin: 0;
+  background: #FFFF00;
+  font-family: "Open Sans";
+  background-color: #e0e326;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 800'%3E%3Cg fill-opacity='0.88'%3E%3Ccircle fill='%23e0e326' cx='400' cy='400' r='600'/%3E%3Ccircle fill='%23febc14' cx='400' cy='400' r='500'/%3E%3Ccircle fill='%23ff9232' cx='400' cy='400' r='400'/%3E%3Ccircle fill='%23ff6951' cx='400' cy='400' r='300'/%3E%3Ccircle fill='%23fb4670' cx='400' cy='400' r='200'/%3E%3Ccircle fill='%23d9348b' cx='400' cy='400' r='100'/%3E%3C/g%3E%3C/svg%3E");
+background-attachment: fixed;
+background-size: cover;
+width: auto;
+}
+canvas{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    }
+
+
+    a {
+      text-decoration: none;
+      display: inline-block;
+      padding: 8px 16px;
+    }
+
+    a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .previous {
+      position: relative;
+      left: 800px;
+      top: 650px;
+      background-color: #f1f1f1;
+      color: black;
+    }
+
+    .next {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .round {
+      border-radius: 50%;
+    }
+
+
+
+.tennis-player{
+  padding-bottom: 50px;
+  float:left;
+  top: 10px;
+  height:300px;
+  transition: all 2s ease 0s;
+  animation: rotatePlayer 2s ease-in-out infinite;
+}
+.ball-pack{
+  background-color:red;
+    display:block;
+    margin-left: 28%;
+    margin-right: 80%;
+    margin-top: 10%;
+}
+.bouncing-ball {
+    background: #0EBB9A;
+    width: 20px;
+    height: 20px;
+    margin:5px;
+    transition: all 2s ease 0s;
+    animation: bouncing 2s ease-in-out infinite alternate forwards;
+    border-radius: 50%;
+}
+.bouncing-ball:nth-child(2){
+    animation-delay: 100ms;
+}
+.bouncing-ball:nth-child(3){
+    animation-delay: 150ms;
+}
+.bouncing-ball:nth-child(4){
+    animation-delay: 200ms;
+}
+.racquet{
+    width:100px;
+    height: 10px;
+    background: rosybrown;
+    margin-left: 24%;
+    margin-top: -10px;
+}
+
+@keyframes rotatePlayer{
+    0% {
+        transform: rotateY(0deg);
+    }
+    60% {
+        transform: rotateY(30deg);
+    }
+    100% {
+        transform: rotateY(0deg);
+    }
+}
+
+@keyframes bouncing{
+    0% {
+        transform:initial;
+    }
+    60% {
+        transform: translate3d(0px, -35px,0px);
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    100% {
+        transform: initial;
+    }
+}
+
+
+
+
+
+
+.sticke{
+  padding-bottom: 50px;
+  float: right;
+  top: 0;
+  height:300px;
+  transition: all 2s ease 0s;
+  animation: rotatePlayer 2s ease-in-out infinite;
+}
+
+.bouncingH{
+  background: #0EBB9A;
+  float: right;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  margin:50px;
+  transition: all 2s ease 0s;
+  animation: bouncing 2s ease-in-out infinite alternate forwards;
+  border-radius: 50%;
+}
+
+@keyframes rotateStick{
+    0% {
+        transform: rotateY(0deg);
+    }
+    60% {
+        transform: rotateY(30deg);
+    }
+    100% {
+        transform: rotateY(0deg);
+    }
+}
+
+
+@keyframes bouncingH{
+    0% {
+        transform:initial;
+    }
+    60% {
+        transform: translate3d(0px, -35px,0px);
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    100% {
+        transform: initial;
+    }
+}
+.timer{
+  position:absolute;
+  top:700px;
+  right:30px;
+  color:#fff;
+  font-size:20px;
+  letter-spacing:1px;
+}
